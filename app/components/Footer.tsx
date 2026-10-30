@@ -21,7 +21,7 @@ export default function Footer() {
               Care support for every family. At every stage of life.
             </p>
             <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'Inter, sans-serif' }}>
-              support@omohan.com<br />8 The Green, Ste A<br />Dover, DE 19901
+              support@omohan.com<br />838 Walker Rd Ste 21-2<br />Dover, DE 19904-2751
             </p>
           </div>
           <div>
