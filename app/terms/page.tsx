@@ -64,6 +64,7 @@ export default function TermsPage() {
             <li>Opting in is optional and not required to use Omohan.</li>
             <li>Consent is not a condition of purchase.</li>
             <li>No mobile information will be shared with or sold to third parties for marketing or promotional purposes.</li>
+            <li>Text messaging originator opt-in data and consent will not be shared with any third parties.</li>
             <li>Carriers are not liable for delayed or undelivered messages.</li>
           </ul>
           <p className="mb-4" style={{ color: '#6B7280' }}>{HEALTH_INFO_NOTE}</p>
