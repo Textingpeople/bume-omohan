@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { LEGAL_NAME, ADDRESS, PHONE_DISPLAY, PHONE_TEL, EMAIL } from '../lib/siteContent';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -25,7 +27,7 @@ export default function ContactPage() {
       <section className="py-12" style={{ backgroundColor: '#F5F7FA' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-extrabold mb-4" style={{ color: '#1F2937' }}>Contact Us</h1>
-          <p className="text-lg" style={{ color: '#6B7280' }}>We're here to help. Reach out with any questions, concerns, or feedback.</p>
+          <p className="text-lg" style={{ color: '#6B7280' }}>We&apos;re here to help. Reach out with any questions, concerns, or feedback.</p>
         </div>
       </section>
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -40,7 +42,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold mb-2" style={{ color: '#1F2937' }}>Message Sent!</h3>
-                <p style={{ color: '#6B7280' }}>Thank you for reaching out. We'll get back to you within 1–2 business days.</p>
+                <p style={{ color: '#6B7280' }}>Thank you for reaching out. We&apos;ll get back to you within 1–2 business days.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -58,6 +60,7 @@ export default function ContactPage() {
                     <option value="">Select a topic...</option>
                      <option value="sales">Sales</option>
                      <option value="support">Customer Support</option>
+                     <option value="sms">Text message (SMS) help</option>
                      <option value="general">General Inquiry</option>
                    </select>
                 </div>
@@ -77,16 +80,25 @@ export default function ContactPage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>Email</h3>
-                  <a href="mailto:support@omohan.com" className="text-base font-medium hover:underline" style={{ color: '#2D7D6F' }}>support@omohan.com</a>
+                  <a href={`mailto:${EMAIL}`} className="text-base font-medium hover:underline" style={{ color: '#2D7D6F' }}>{EMAIL}</a>
                   <p className="text-sm mt-1" style={{ color: '#6B7280' }}>Response within 1–2 business days</p>
                 </div>
                 <div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>Phone</h3>
+                  <a href={`tel:${PHONE_TEL}`} className="text-base font-medium hover:underline" style={{ color: '#2D7D6F' }}>{PHONE_DISPLAY}</a>
+                </div>
+                <div>
                   <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>Mailing Address</h3>
-                  <p style={{ color: '#6B7280' }}>Omohan<br />838 Walker Rd Ste 21-2<br />Dover, DE 19904-2751</p>
+                  <p style={{ color: '#6B7280' }}>{LEGAL_NAME}<br />{ADDRESS}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#9CA3AF' }}>SMS Support</h3>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for assistance. Message and data rates may apply.</p>
+                  <p className="text-sm" style={{ color: '#6B7280' }}>
+                    Omohan Care Alerts: Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong> to opt out, <strong>START</strong> to resubscribe, <strong>HELP</strong> for help. Consent is not a condition of purchase. See our{' '}
+                    <Link href="/sms" className="font-medium hover:underline" style={{ color: '#2D7D6F' }}>SMS Program</Link>,{' '}
+                    <Link href="/terms#sms" className="font-medium hover:underline" style={{ color: '#2D7D6F' }}>Terms</Link>, and{' '}
+                    <Link href="/privacy" className="font-medium hover:underline" style={{ color: '#2D7D6F' }}>Privacy Policy</Link>.
+                  </p>
                 </div>
               </div>
             </div>
@@ -95,11 +107,11 @@ export default function ContactPage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-sm font-semibold mb-1" style={{ color: '#1F2937' }}>How do I opt out of SMS?</h3>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>Reply <strong>STOP</strong> to any message. You'll be removed immediately.</p>
+                  <p className="text-sm" style={{ color: '#6B7280' }}>Reply <strong>STOP</strong> to any message. You&apos;ll be removed immediately.</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold mb-1" style={{ color: '#1F2937' }}>Will my info be shared?</h3>
-                  <p className="text-sm" style={{ color: '#6B7280' }}>No. We do not sell or share your mobile number with third parties for marketing. See our <a href="/privacy" className="font-medium hover:underline" style={{ color: '#2D7D6F' }}>Privacy Policy</a>.</p>
+                  <p className="text-sm" style={{ color: '#6B7280' }}>No. Mobile information and text-message consent are never shared with or sold to third parties for marketing. See our <Link href="/privacy" className="font-medium hover:underline" style={{ color: '#2D7D6F' }}>Privacy Policy</Link>.</p>
                 </div>
               </div>
             </div>

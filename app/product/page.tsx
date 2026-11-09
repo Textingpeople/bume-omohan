@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Heart, Users, BookOpen, Phone, CheckCircle, Baby, UserCheck, Star, ArrowRight, Shield } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { EMERGENCY_DISCLAIMER } from '../lib/siteContent';
+
+export const metadata: Metadata = {
+  title: 'Product — Omohan',
+  description: 'Omohan is a care-navigation employee benefit. Employees get a dedicated human navigator for childcare, eldercare, and family care needs.',
+};
 
 export default function ProductPage() {
   return (
@@ -40,12 +47,12 @@ export default function ProductPage() {
             {[
               { icon: Phone, title: 'Dedicated care navigator', desc: 'Every employee gets a real human navigator — not a chatbot — who learns their family&apos;s needs and provides ongoing support.' },
               { icon: Baby, title: 'Childcare & daycare', desc: 'Finding quality childcare, backup care, after-school programs, and summer camps for children of all ages.' },
-              { icon: UserCheck, title: 'Eldercare & senior living', desc: 'Navigating senior living options, in-home care, memory care, and Medicare/Medicaid benefits for aging parents.' },
+              { icon: UserCheck, title: 'Eldercare & senior living', desc: 'Navigating senior living options, in-home care, memory care, and understanding Medicare and Medicaid options (general guidance only) for aging parents.' },
               { icon: Heart, title: 'Special needs support', desc: 'Resources and advocacy for children and adults with disabilities, developmental differences, or special needs.' },
-              { icon: Star, title: 'Mental health resources', desc: 'Connecting employees and their families with therapists, counselors, and mental health support services.' },
+              { icon: Star, title: 'Mental health resources', desc: 'Helping employees and their families find therapists, counselors, and mental health services.' },
               { icon: Users, title: 'Newborn & parental leave', desc: 'Support for new parents navigating leave policies, newborn care, postpartum resources, and childcare planning.' },
               { icon: BookOpen, title: 'Personalized care plans', desc: 'Your navigator researches options, vets providers, and creates a customized care plan for your specific situation.' },
-              { icon: Shield, title: 'Crisis & emergency care', desc: 'Immediate support when unexpected caregiving situations arise — available 24/7 for urgent needs.' },
+              { icon: Shield, title: 'Urgent caregiving changes', desc: 'Help re-planning care when something unexpected happens, like a caregiver cancelling or a parent being discharged from hospital.' },
               { icon: ArrowRight, title: 'Ongoing support', desc: 'As your needs change, your navigator adapts your plan. We&apos;re with you for the long haul, not just a one-time call.' },
             ].map((item) => (
               <div key={item.title} className="p-6 rounded-xl border hover:shadow-md transition-shadow" style={{ borderColor: '#CCFBF1' }}>
@@ -54,6 +61,11 @@ export default function ProductPage() {
                 </div>
                 <h3 className="font-bold mb-2" style={{ color: '#1A4A42' }}>{item.title}</h3>
                 <p className="text-sm" style={{ color: '#6B7280' }}>{item.desc}</p>
+                {item.title === 'Urgent caregiving changes' && (
+                  <p className="text-xs mt-3 pt-3" style={{ color: '#9CA3AF', borderTop: '1px solid #E5E7EB', lineHeight: 1.6 }}>
+                    {EMERGENCY_DISCLAIMER}
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -93,7 +105,7 @@ export default function ProductPage() {
             <div>
               <h2 className="text-4xl font-bold text-white mb-6">Why employers choose Omohan</h2>
               <p className="text-xl mb-8" style={{ color: '#99F6E4' }}>
-                Caregiving responsibilities cost employers billions annually in lost productivity. Omohan helps employees manage care — so they can show up fully at work.
+                Caregiving responsibilities affect how employees show up at work. Omohan helps employees manage care — so they can show up fully at work.
               </p>
               <Link href="/signup" className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl transition-opacity hover:opacity-90" style={{ backgroundColor: '#2D7D6F', color: '#FFFFFF' }}>
                 Request a Demo <ArrowRight className="w-5 h-5" />
@@ -101,7 +113,7 @@ export default function ProductPage() {
             </div>
             <div className="space-y-4">
               {[
-                { title: 'No cost to the employer', desc: 'Omohan is funded through voluntary employee payroll deduction.' },
+                { title: 'Human navigators', desc: "Every enrolled employee works with a real person who learns their family's needs." },
                 { title: 'Zero IT setup required', desc: 'Employees self-enroll using their unique Employee ID. No integration needed.' },
                 { title: 'Immediate access', desc: 'Employees connect with their care navigator from day one of enrollment.' },
                 { title: 'Dedicated HR support', desc: 'Our team supports your HR department throughout implementation and beyond.' },
@@ -124,7 +136,7 @@ export default function ProductPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Heart className="w-14 h-14 mx-auto mb-6" style={{ color: '#2D7D6F' }} fill="#2D7D6F" />
           <h2 className="text-4xl font-bold mb-6" style={{ color: '#1A4A42' }}>Ready to support your employees?</h2>
-          <p className="text-xl mb-10" style={{ color: '#4B7A72' }}>Request a proposal and our team will walk you through everything.</p>
+          <p className="text-xl mb-10" style={{ color: '#4B7A72' }}>Request a demo and our team will walk you through everything.</p>
           <Link href="/signup" className="inline-block text-white font-bold px-8 py-4 rounded-xl text-lg transition-opacity hover:opacity-90 shadow-lg" style={{ backgroundColor: '#2D7D6F' }}>
             Get Care Support
           </Link>

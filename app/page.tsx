@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Heart, Phone, BookOpen, Baby, UserCheck, Star, Users, CheckCircle, ArrowRight } from 'lucide-react';
+import { Heart, Phone, BookOpen, Baby, UserCheck, Star, Users, CheckCircle, ArrowRight, MessageSquare, Compass } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { EMERGENCY_DISCLAIMER } from './lib/siteContent';
+
+export const metadata: Metadata = {
+  title: 'Omohan — Care Navigation for Working Families',
+  description: 'Omohan is a care-navigation employee benefit. Employees get a dedicated human navigator for childcare, eldercare, and family care needs.',
+};
 
 export default function HomePage() {
   return (
@@ -44,6 +51,46 @@ export default function HomePage() {
                 Talk to Sales
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── AT A GLANCE ── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+          <div className="text-center mb-14">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#0F6B57', fontFamily: 'Inter, sans-serif' }}>
+              At a Glance
+            </p>
+            <h2 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)', color: '#174B43' }}>
+              Human care navigation, offered as an employee benefit.
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: Heart, title: 'What it is', desc: 'A care-navigation benefit employers offer, with a dedicated human navigator for every enrolled employee.' },
+              { icon: Compass, title: 'How it works', desc: "Enroll with your Employee ID. Your navigator learns your family's needs and builds a personalized care plan." },
+              { icon: MessageSquare, title: 'Text messages', desc: 'Optional. Account notifications and messages with your navigator — never marketing.' },
+            ].map((item) => (
+              <div key={item.title} className="p-8 rounded-2xl" style={{ backgroundColor: '#DFF8F1' }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: 'rgba(46,159,135,0.2)' }}>
+                  <item.icon className="w-6 h-6" style={{ color: '#0F6B57', strokeWidth: 1.75 }} />
+                </div>
+                <h3 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1.1rem', color: '#174B43', marginBottom: '0.5rem' }}>{item.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: '#2C3E3A', lineHeight: 1.7 }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-center mt-8" style={{ fontSize: '0.8rem', color: '#6B7280', maxWidth: '640px', margin: '2rem auto 0' }}>
+            {EMERGENCY_DISCLAIMER}
+          </p>
+          <div className="flex flex-wrap justify-center gap-6 mt-6">
+            <Link href="/about" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: '#0F6B57' }}>
+              About Omohan <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link href="/sms" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: '#0F6B57' }}>
+              SMS Program <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -174,7 +221,7 @@ export default function HomePage() {
             </div>
             <div className="space-y-4">
               {[
-                { title: 'No cost to the employer', desc: 'Omohan is funded through voluntary employee payroll deduction.' },
+                { title: 'Human navigators', desc: "Every enrolled employee works with a real person who learns their family's needs." },
                 { title: 'Zero IT setup required', desc: 'Employees self-enroll using their unique Employee ID. No integration needed.' },
                 { title: 'Immediate access', desc: 'Employees connect with their care navigator from day one of enrollment.' },
                 { title: 'Dedicated HR support', desc: 'Our team supports your HR department throughout implementation and beyond.' },
@@ -203,7 +250,7 @@ export default function HomePage() {
             Your family deserves support. We&apos;re here to help.
           </h2>
           <p style={{ fontSize: '1.1rem', color: '#2C3E3A', lineHeight: 1.7, marginBottom: '2.5rem' }}>
-            Employees can sign up directly, or employers can book a demo to learn how Omohan works for your team.
+            Employees of enrolled companies can sign up with their Employee ID. Employers can book a demo to learn more.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/signup"

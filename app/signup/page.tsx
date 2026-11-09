@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { ACCOUNT_NOTIFICATIONS_CONSENT, CUSTOMER_CARE_CONSENT } from '../lib/siteContent';
 
 function generateEmployeeId() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -48,22 +49,22 @@ function StepDots({ current, total }: { current: number; total: number }) {
 
 export default function SignupPage() {
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState({ name: '', email: '', company: '', role: '', employeeId: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', company: '', role: '', employeeId: '', phone: '' });
   const [emailError, setEmailError] = useState('');
   const [employeeIdError, setEmployeeIdError] = useState('');
-  const [validEmployeeId, setValidEmployeeId] = useState('');
+  const [validEmployeeId] = useState(() => generateEmployeeId());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    setValidEmployeeId(generateEmployeeId());
-  }, []);
+  const [accountNotificationsOptIn, setAccountNotificationsOptIn] = useState(false);
+  const [customerCareOptIn, setCustomerCareOptIn] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     if (name === 'email') setEmailError('');
     if (name === 'employeeId') setEmployeeIdError('');
+    if (name === 'phone') setPhoneError('');
   };
 
   const handleStep0 = () => {
@@ -85,6 +86,11 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if ((accountNotificationsOptIn || customerCareOptIn) && !formData.phone.trim()) {
+      setPhoneError('Enter a mobile number to receive text messages.');
+      return;
+    }
+    setPhoneError('');
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
@@ -112,7 +118,7 @@ export default function SignupPage() {
               Care support for every family, at every stage of life.
             </h2>
             <p className="text-white opacity-70 text-base leading-relaxed max-w-xs">
-              Connect your employee account to access your Omohan benefits — provided by your employer.
+              Connect your employee account to access your Omohan benefit, offered through your employer. You&apos;ll need the Employee ID from your HR onboarding email.
             </p>
           </div>
           <div className="relative z-10 space-y-4">
@@ -151,7 +157,7 @@ export default function SignupPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h2 className="text-3xl font-extrabold mb-4" style={{ color: '#2D7D6F' }}>You're all set!</h2>
+                <h2 className="text-3xl font-extrabold mb-4" style={{ color: '#2D7D6F' }}>You&apos;re all set!</h2>
                 <p className="text-lg mb-8 text-gray-500">Your Omohan account is active. Your care navigator will reach out within 24 hours to get started.</p>
                 <Link href="/" className="inline-block text-white font-bold px-8 py-3 rounded-xl transition-opacity hover:opacity-90" style={{ backgroundColor: '#2D7D6F' }}>
                   Back to Home
@@ -165,7 +171,7 @@ export default function SignupPage() {
                 {step === 0 && (
                   <>
                     <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#2D7D6F' }}>Step 1 of 3 — Your Information</p>
-                    <h1 className="text-3xl font-extrabold mb-2 text-gray-900">Let's get started.</h1>
+                    <h1 className="text-3xl font-extrabold mb-2 text-gray-900">Let&apos;s get started.</h1>
                     <p className="text-gray-500 text-sm leading-relaxed mb-8">Enter your name and work email to begin setting up your account.</p>
                     <div className="space-y-5">
                       <div>
@@ -196,6 +202,16 @@ export default function SignupPage() {
                           style={{ borderColor: '#E5E7EB', color: '#111827' }}
                         />
                       </div>
+                      <div>
+                        <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-500">Mobile Phone Number</label>
+                        <input
+                          type="tel" name="phone" value={formData.phone} onChange={handleChange}
+                          placeholder="(555) 123-4567"
+                          className="w-full px-4 py-3 rounded-xl text-sm border focus:outline-none"
+                          style={{ borderColor: '#E5E7EB', color: '#111827' }}
+                        />
+                        <p className="text-xs text-gray-400 mt-1">Only needed if you opt in to text messages.</p>
+                      </div>
                       <button
                         type="button" onClick={handleStep0}
                         className="w-full py-3 text-white font-bold rounded-xl transition-opacity hover:opacity-90"
@@ -213,14 +229,14 @@ export default function SignupPage() {
                     <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#2D7D6F' }}>Step 2 of 3 — Employee Verification</p>
                     <h1 className="text-3xl font-extrabold mb-2 text-gray-900">Verify your access.</h1>
                     <p className="text-gray-500 text-sm leading-relaxed mb-8">
-                      Enter the Employee ID from your HR onboarding email to connect your account to your employer's Omohan plan.
+                      Enter the Employee ID from your HR onboarding email to connect your account to your employer&apos;s Omohan plan.
                     </p>
                     <div className="space-y-5">
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-500">Employee ID *</label>
                         <input
                           type="text" name="employeeId" required value={formData.employeeId} onChange={handleChange}
-                          placeholder={validEmployeeId}
+                          placeholder="e.g. OMH-123456"
                           className="w-full px-4 py-3 rounded-xl text-sm border focus:outline-none font-mono tracking-wider"
                           style={{ borderColor: employeeIdError ? '#DC2626' : '#E5E7EB', color: '#111827' }}
                         />
@@ -281,10 +297,65 @@ export default function SignupPage() {
                           <span className="text-gray-500">Employee ID</span>
                           <span className="font-mono font-semibold text-gray-900">{formData.employeeId}</span>
                         </div>
+                        {formData.phone && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-500">Phone</span>
+                            <span className="font-semibold text-gray-900">{formData.phone}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Terms only — no SMS */}
+                    {/* SMS opt-in checkboxes — optional, unchecked by default */}
+                    <p className="text-xs text-gray-500 mb-4">
+                      Text messages are optional. You can use Omohan without opting in.
+                    </p>
+
+                    {(formData.phone.trim() === '') && (
+                      <div className="mb-5">
+                        <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-500">Mobile Phone Number</label>
+                        <input
+                          type="tel" name="phone" value={formData.phone} onChange={handleChange}
+                          placeholder="(555) 123-4567"
+                          className="w-full px-4 py-3 rounded-xl text-sm border focus:outline-none"
+                          style={{ borderColor: phoneError ? '#DC2626' : '#E5E7EB', color: '#111827' }}
+                        />
+                      </div>
+                    )}
+                    {phoneError && <p className="text-xs text-red-600 mb-4">{phoneError}</p>}
+
+                    <div className="flex items-start gap-3 mb-4">
+                      <input
+                        type="checkbox" id="accountNotifications"
+                        checked={accountNotificationsOptIn}
+                        onChange={(e) => setAccountNotificationsOptIn(e.target.checked)}
+                        className="mt-1 w-4 h-4 rounded flex-shrink-0"
+                        style={{ accentColor: '#2D7D6F' }}
+                      />
+                      <label htmlFor="accountNotifications" className="text-xs text-gray-500 leading-relaxed">
+                        {ACCOUNT_NOTIFICATIONS_CONSENT} See our{' '}
+                        <Link href="/terms#sms" className="underline" style={{ color: '#2D7D6F' }}>Terms of Service</Link>
+                        {' '}and{' '}
+                        <Link href="/privacy" className="underline" style={{ color: '#2D7D6F' }}>Privacy Policy</Link>.
+                      </label>
+                    </div>
+
+                    <div className="flex items-start gap-3 mb-6">
+                      <input
+                        type="checkbox" id="customerCare"
+                        checked={customerCareOptIn}
+                        onChange={(e) => setCustomerCareOptIn(e.target.checked)}
+                        className="mt-1 w-4 h-4 rounded flex-shrink-0"
+                        style={{ accentColor: '#2D7D6F' }}
+                      />
+                      <label htmlFor="customerCare" className="text-xs text-gray-500 leading-relaxed">
+                        {CUSTOMER_CARE_CONSENT} See our{' '}
+                        <Link href="/terms#sms" className="underline" style={{ color: '#2D7D6F' }}>Terms of Service</Link>
+                        {' '}and{' '}
+                        <Link href="/privacy" className="underline" style={{ color: '#2D7D6F' }}>Privacy Policy</Link>.
+                      </label>
+                    </div>
+
                     <div className="flex items-start gap-3 mb-6">
                       <input
                         type="checkbox" id="termsAgreement" required

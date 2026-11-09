@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { LEGAL_NAME, ADDRESS, PHONE_DISPLAY, PHONE_TEL, EMAIL, EMERGENCY_DISCLAIMER, SCOPE_DISCLAIMER } from '../lib/siteContent';
 
 export default function Footer() {
   return (
@@ -21,7 +22,9 @@ export default function Footer() {
               Care support for every family. At every stage of life.
             </p>
             <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'Inter, sans-serif' }}>
-              support@omohan.com<br />838 Walker Rd Ste 21-2<br />Dover, DE 19904-2751
+              {LEGAL_NAME}<br />{ADDRESS}<br />
+              <a href={`tel:${PHONE_TEL}`} style={{ color: 'rgba(255,255,255,0.45)' }}>{PHONE_DISPLAY}</a><br />
+              <a href={`mailto:${EMAIL}`} style={{ color: 'rgba(255,255,255,0.45)' }}>{EMAIL}</a>
             </p>
           </div>
           <div>
@@ -39,8 +42,8 @@ export default function Footer() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif' }}>Legal</p>
             <ul className="space-y-3">
-              {[{ label: 'Privacy Policy', href: '/privacy' }, { label: 'Terms of Service', href: '/terms' }].map(item => (
-                <li key={item.href}>
+              {[{ label: 'Privacy Policy', href: '/privacy' }, { label: 'Terms of Service', href: '/terms' }, { label: 'SMS Program', href: '/sms' }, { label: 'About', href: '/about' }, { label: 'Contact', href: '/contact' }].map(item => (
+                <li key={item.label}>
                   <Link href={item.href} className="text-sm hover:text-white transition-colors" style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'Inter, sans-serif' }}>
                     {item.label}
                   </Link>
@@ -49,9 +52,18 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="pt-8" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <p className="text-center text-sm" style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'Inter, sans-serif' }}>
-            &copy; {new Date().getFullYear()} Omohan. All rights reserved.
+        <div className="pt-8 space-y-3" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif', lineHeight: 1.6, maxWidth: '720px', margin: '0 auto' }}>
+            {EMERGENCY_DISCLAIMER}
+          </p>
+          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif', lineHeight: 1.6, maxWidth: '720px', margin: '0 auto' }}>
+            {SCOPE_DISCLAIMER}
+          </p>
+          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter, sans-serif', lineHeight: 1.6 }}>
+            Text messages are optional. Reply STOP to opt out, HELP for help. Msg & data rates may apply.
+          </p>
+          <p className="text-center text-sm pt-2" style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'Inter, sans-serif' }}>
+            &copy; {new Date().getFullYear()} {LEGAL_NAME}. All rights reserved.
           </p>
         </div>
       </div>

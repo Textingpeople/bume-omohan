@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { CheckCircle, ArrowRight } from 'lucide-react';
@@ -51,7 +52,7 @@ export default function TalkToSalesPage() {
             {[
               'Personalized demo for your organization',
               'Learn about the employee enrollment flow',
-              'Understand pricing and implementation',
+              'Understand implementation and enrollment',
               'Get answers to your HR team&apos;s questions',
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
@@ -76,10 +77,10 @@ export default function TalkToSalesPage() {
                 <p style={{ fontSize: '1rem', color: '#2C3E3A', lineHeight: 1.7, marginBottom: '2rem' }}>
                   Thank you for your interest in Omohan. Our team will reach out within 1–2 business days to schedule your demo.
                 </p>
-                <a href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-opacity hover:opacity-90"
+                <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-opacity hover:opacity-90"
                   style={{ backgroundColor: '#2E9F87', fontFamily: 'Inter, sans-serif' }}>
                   Back to Home
-                </a>
+                </Link>
               </div>
             ) : (
               <>
